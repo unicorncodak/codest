@@ -7,12 +7,9 @@ TaskApp works with multiple users. Each user has its own tasks.
 
 Install required tools:
 * ruby (use `rbenv` or `rvm`). Proper version is defined in `.ruby-version` file.
-* nodejs (use `nvm`). See `.nvmrc` file for specific version.
-* `yarn`: `npm install -g yarn`
 
 Run following commands:
 * `bundler install` to install all required gems.
-* `yarn install` to install all required javascript packages.
 * `rails db:create db:migrate` to create database and run all migrations
 * `rails db:seed` to seed database
 

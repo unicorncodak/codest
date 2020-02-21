@@ -10,9 +10,9 @@ gem 'puma', '~> 4.1'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 gem 'sass-rails', '>= 6'
 gem 'sqlite3', '~> 1.4'
-gem 'turbolinks', '~> 5'
+gem 'sprockets', '~> 4'
+gem 'sprockets-rails', '~> 3', require: 'sprockets/railtie'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'webpacker', '~> 4.0'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
