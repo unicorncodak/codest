@@ -1,0 +1,46 @@
+<%= render "links" %>
+
+<h2>My Tasks</h2>
+
+<div class="search">
+  <h4>Filtering</h4>
+
+  <%= form_tag tasks_path, method: "get" do %>
+    Title
+    <%= text_field_tag "query", params[:query] %>
+
+    Priority
+    <%= select_tag :priority_op, options_for_select([[">", ">"], ["=", "=="], ["<", "<"]], params[:priority_op]) %>
+    <%= text_field_tag :priority, params[:priority] %>
+    <%= submit_tag "Search" %>
+  <% end %>
+</div>
+
+<br />
+
+<div class="tasks">
+  <% if @tasks.empty? %>
+    There are no tasks matching your criteria
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <td>Title</td>
+          <td>Priority</td>
+          <td>Created at</td>
+          <td>Actions</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+          <tr>
+            <td><strong><%= task.title %></td>
+            <td><%= task.priority %></td>
+            <td><%= task.created_at %></td>
+            <td><%= link_to "Delete", task_path(task), method: :delete %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<div>

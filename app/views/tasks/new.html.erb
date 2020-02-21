@@ -1,0 +1,23 @@
+<%= render "links" %>
+
+<h2>New Task</h2>
+
+<%= form_for @task do |f| %>
+  <%= error_messages_for @task %>
+
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :priority %>
+    <%= f.select :priority, [1, 2, 3, 4, 5, 6, 7, 8, 9] %>
+  </div>
+
+  <div class="field">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

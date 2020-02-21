@@ -1,0 +1,8 @@
+<h1>Welcome in TaskApp!</h1>
+<p>
+  TaskApp lets you manage your tasks in a simple way.
+</p>
+
+<% if user_signed_in? %>
+  <%= link_to 'See my tasks', tasks_path %>
+<% end %>
