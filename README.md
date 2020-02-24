@@ -22,7 +22,7 @@ Visit website [http://localhost:3000](http://localhost:3000) and sign in as `tes
 
 1. Add possibility to sort tasks. Clicking on "Title" and "Priority" labels should sort tasks by corresponding attribute. Second click should reverse order.
 2. `TasksController#index` method is a little bit messy. Refactor it to make it more readable. Beside readability do you see any other problems with its code? Could you fix them too?
-3. Some user reporped that there is a security vulnerability in the app. Somehow user can create a task as other user and we have no idea how is it possible because already call `before_action :authenticate_user!` in `TasksController`. Can you find a problem and fix it?
+3. Some user reported that there is a security vulnerability in the app. Somehow an user can create a task as another user and we have no idea how is it possible because we already call `before_action :authenticate_user!` in `TasksController`. Can you find the problem and fix it?
 4. Code is untested. Add RSpec to the project and write specs which covers changes you have made in previous tasks.
 
 After you finish send us entire code in zip/gzip file.
