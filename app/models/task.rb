@@ -18,6 +18,7 @@ class Task < ApplicationRecord
   }
 
   def self.sort(params, current_user)
-    params[:sort_by] == "title" ? @tasks = current_user.tasks.order(title: params[:order].to_sym) : @tasks = current_user.tasks.order(priority: params[:order].to_sym)
+    params[:sort_by] == "title" ? @tasks = current_user.tasks.order(title: params[:order].to_sym) :
+      @tasks = current_user.tasks.order(priority: params[:order].to_sym)
   end
 end
