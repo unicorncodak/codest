@@ -3,19 +3,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks
-    # filter tasks by title if query param is present
-    if params[:query].present?
-      @tasks = @tasks.where("title LIKE '%#{params[:query]}%'")
-    end
-    if params[:priority].present?
-      filtered_tasks = []
-      @tasks.map.with_index { |a, i|
-        filtered_tasks << a if a.priority.send(params[:priority_op], params[:priority].to_i)
-      }
-      @tasks = filtered_tasks
-    end
-    # uncomment next line in development to limit search result (faster page load)
-    # @tasks = @tasks[0, 5]
+    @tasks = @tasks.filter_result(filter_params(params), params[:priority_op], @tasks)
+    @order = Task::ORDER
   end
 
   def new
@@ -23,13 +12,18 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-    
+    @task = current_user.tasks.new(task_params)
     if @task.save
       redirect_to tasks_path, notice: "Task created"
     else
       render :new
     end
+  end
+
+  def sort
+    @tasks = Task.sort(params, current_user)
+    params[:order] == "asc" ? @order = "desc" : @order = "asc"
+    render :index
   end
 
   def destroy
@@ -40,6 +34,11 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit!
+    params.require(:task).permit(:title, :priority)
   end
+
+  def filter_params(params)
+    params.slice(:query, :priority)
+  end
+
 end
