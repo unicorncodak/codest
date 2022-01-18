@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :task do
     title { Faker::Internet.slug }
@@ -5,4 +7,3 @@ FactoryBot.define do
     user { 1 }
   end
 end
-

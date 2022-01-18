@@ -1,24 +1,23 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  describe ' Model.Task' do
-    before(:all) do
-      @user = FactoryBot.create(:user)
-    end
+  let!(:user) { create(:user) }
+  let!(:task) { create(:task, title: 'demo', priority: 2, user: :user) }
 
-    let(:task) { FactoryBot.create(:task, title: "demo", priority: 2, user: @user) }
-
-    context 'validates field using fixtures' do
+  describe 'Task Validation' do
+    context 'validates fields' do
       it 'attributes must be valid' do
         expect(task).to be_valid
       end
 
-      it 'title must not be valid' do
+      it 'expects title to be invalid' do
         task.title = nil
         expect(task).not_to be_valid
       end
 
-      it 'priority must not be valid' do
+      it 'expects priority to be invalid' do
         task.priority = nil
         expect(task).not_to be_valid
       end

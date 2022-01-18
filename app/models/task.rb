@@ -1,24 +1,20 @@
 class Task < ApplicationRecord
-  ORDER = "asc"
-  include Filterable
+  ORDER = 'asc'
   belongs_to :user
 
   validates :title, presence: true
   validates :priority, presence: true
-  scope :filter_by_query, -> (op = nil, title) { where("title like ?", "#{title}%") }
-  scope :filter_by_priority, -> (op, priority) {
-    case op
-    when ">"
-      where("priority > ? ", "#{priority}")
-    when "<"
-      where("priority < ? ", "#{priority}")
-    else
-      where("priority = ? ", "#{priority}")
+  scope :filter_by_query, ->(_op = nil, title) { where('title like ?', "#{title}%") }
+  scope :filter_by_priority, lambda { |op, priority|
+    if ["<",">",">=","<=","="].include? op
+      where("priority #{op} ?", priority)
     end
   }
 
   def self.sort(params, current_user)
-    params[:sort_by] == "title" ? @tasks = current_user.tasks.order(title: params[:order].to_sym) :
-      @tasks = current_user.tasks.order(priority: params[:order].to_sym)
+    tasks = params[:sort_by] == 'title' ? current_user.tasks.order(title: params[:order].to_sym) :
+               current_user.tasks.order(priority: params[:order].to_sym)
+    order = params[:order] == 'asc' ? 'desc' : 'asc'
+    [tasks, order]
   end
 end

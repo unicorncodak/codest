@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   end
   root 'home#index'
 
-  resources :tasks, only: [ :index, :new, :create, :destroy ]
+  resources :tasks, only: %i[index new create destroy]
 end

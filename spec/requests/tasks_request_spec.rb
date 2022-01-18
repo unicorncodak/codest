@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Tasks", type: :request do
+RSpec.describe 'Tasks', type: :request do
   current_user = FactoryBot.create(:user)
   let(:valid_attributes) do
     {
@@ -15,7 +17,7 @@ RSpec.describe "Tasks", type: :request do
     {
       'id' => 'a',
       'title' => 1,
-      'priority' => "4"
+      'priority' => '4'
     }
   end
 
@@ -30,7 +32,7 @@ RSpec.describe "Tasks", type: :request do
         'title' => 'efg',
         'priority' => 6,
         'user_id' => current_user.id
-      },
+      }
     ]
   end
 
@@ -63,8 +65,8 @@ RSpec.describe "Tasks", type: :request do
         sign_in current_user
         task = Task.new(valid_attributes)
         task.save
-        get tasks_path(:query => "tes", :priority => 2, :priority_op => "<"), params: { task: valid_attributes }
-        expect(response.body).to include("There are no tasks matching your criteria")
+        get tasks_path(query: 'tes', priority: 2, priority_op: '<'), params: { task: valid_attributes }
+        expect(response.body).to include('There are no tasks matching your criteria')
       end
     end
   end
@@ -130,11 +132,11 @@ RSpec.describe "Tasks", type: :request do
           task = Task.new(item)
           task.save
         end
-        get sort_tasks_path(sort_by: "title", order: "asc")
+        get sort_tasks_path(sort_by: 'title', order: 'asc')
         arr = []
         @array_of_hashes = controller.instance_variable_get(:@tasks).to_a.map(&:serializable_hash)
         @array_of_hashes.each do |ele|
-          hash = {"title" => ele["title"], "priority" => ele["priority"], "user_id" => ele["user_id"]}
+          hash = { 'title' => ele['title'], 'priority' => ele['priority'], 'user_id' => ele['user_id'] }
           arr << hash
         end
         expect(arr).to have_same_order(sorted_attributes)
@@ -146,11 +148,11 @@ RSpec.describe "Tasks", type: :request do
           task = Task.new(item)
           task.save
         end
-        get sort_tasks_path(sort_by: "title", order: "desc")
+        get sort_tasks_path(sort_by: 'title', order: 'desc')
         arr = []
         @array_of_hashes = controller.instance_variable_get(:@tasks).to_a.map(&:serializable_hash)
         @array_of_hashes.each do |ele|
-          hash = {"title" => ele["title"], "priority" => ele["priority"], "user_id" => ele["user_id"]}
+          hash = { 'title' => ele['title'], 'priority' => ele['priority'], 'user_id' => ele['user_id'] }
           arr << hash
         end
         expect(arr).not_to have_same_order(sorted_attributes)
@@ -164,11 +166,11 @@ RSpec.describe "Tasks", type: :request do
           task = Task.new(item)
           task.save
         end
-        get sort_tasks_path(sort_by: "priority", order: "asc")
+        get sort_tasks_path(sort_by: 'priority', order: 'asc')
         arr = []
         @array_of_hashes = controller.instance_variable_get(:@tasks).to_a.map(&:serializable_hash)
         @array_of_hashes.each do |ele|
-          hash = {"title" => ele["title"], "priority" => ele["priority"], "user_id" => ele["user_id"]}
+          hash = { 'title' => ele['title'], 'priority' => ele['priority'], 'user_id' => ele['user_id'] }
           arr << hash
         end
         expect(arr).to have_same_order(sorted_attributes)
@@ -180,11 +182,11 @@ RSpec.describe "Tasks", type: :request do
           task = Task.new(item)
           task.save
         end
-        get sort_tasks_path(sort_by: "priority", order: "desc")
+        get sort_tasks_path(sort_by: 'priority', order: 'desc')
         arr = []
         @array_of_hashes = controller.instance_variable_get(:@tasks).to_a.map(&:serializable_hash)
         @array_of_hashes.each do |ele|
-          hash = {"title" => ele["title"], "priority" => ele["priority"], "user_id" => ele["user_id"]}
+          hash = { 'title' => ele['title'], 'priority' => ele['priority'], 'user_id' => ele['user_id'] }
           arr << hash
         end
         expect(arr).not_to have_same_order(sorted_attributes)

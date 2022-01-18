@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_filtered_params, only: %i[index]
 
   def index
-    @tasks = current_user.tasks
-    @tasks = @tasks.filter_result(filter_params(params), params[:priority_op], @tasks)
+    @tasks = TaskFilter.call(@filter_params, params[:priority_op], current_user.tasks)
     @order = Task::ORDER
   end
 
@@ -14,21 +14,20 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: "Task created"
+      redirect_to tasks_path, notice: 'Task created'
     else
       render :new
     end
   end
 
   def sort
-    @tasks = Task.sort(params, current_user)
-    params[:order] == "asc" ? @order = "desc" : @order = "asc"
+    @tasks, @order = Task.sort(params, current_user)
     render :index
   end
 
   def destroy
     Task.find(params[:id]).destroy!
-    redirect_to tasks_path, notice: "Task destroyed"
+    redirect_to tasks_path, notice: 'Task destroyed'
   end
 
   private
@@ -37,8 +36,11 @@ class TasksController < ApplicationController
     params.require(:task).permit(:title, :priority)
   end
 
-  def filter_params(params)
-    params.slice(:query, :priority)
+  def set_filtered_params
+    @filter_params = filter_params
   end
 
+  def filter_params
+    params.slice(:query, :priority)
+  end
 end
